@@ -114,6 +114,9 @@
 1. [BLEED] Fix potential NaN calculations for fast flows - @Crocket63
 1. [Hyd] Reservoirs connected to pneumatics and first failures - @Crocket63
 1. [ATSU] Don't include airport as a waypoint in route uplink - @tracernz (Mike)
+1. [TCAS] Implemented traffic advisories, resolution advisories, and collision avoidance logic - @wpine215 (Iceman) @2hwk (2Cas#1022)
+1. [PFD] Implemented TCAS guidance on vertical speed tape - @wpine215 (Iceman)
+1. [SOUNDS] Connected TCAS TA/RA logic to TCAS Wwise events - @wpine215 (Iceman)  @2hwk (2Cas#1022)
 
 ## 0.7.0
 
