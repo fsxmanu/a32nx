@@ -6,7 +6,7 @@ class A32NX_Core {
             {
                 name: 'StateInitializer',
                 module: new A32NX_StateInitializer(),
-                updateInterval: 100,
+                updateInterval: 250,
             },
             {
                 name: 'ADIRS',
