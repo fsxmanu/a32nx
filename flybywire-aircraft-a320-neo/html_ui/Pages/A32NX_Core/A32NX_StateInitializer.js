@@ -17,11 +17,7 @@ class A32NX_StateInitializer {
         if (active === 1) {
             const athr = SimVar.GetSimVarValue("L:A32NX_AUTOTHRUST_STATUS", "Number");
 
-            if (athr !== 2) {
-                SimVar.SetSimVarValue("K:AUTO_THROTTLE_ARM", "number", 1);
-                SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:1", "Number", 25);
-                SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:2", "Number", 25);
-
+            if (athr === 0) {
                 if (this.autobrakeLevel === 1) {
                     SimVar.SetSimVarValue("L:A32NX_OVHD_AUTOBRK_LOW_ON_IS_PRESSED", "Number", 1).then(() => {
                         SimVar.SetSimVarValue("L:A32NX_OVHD_AUTOBRK_LOW_ON_IS_PRESSED", "Number", 0);
@@ -44,6 +40,11 @@ class A32NX_StateInitializer {
                         });
                     });
                 }
+                SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:1", "Number", 45);
+                SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:2", "Number", 45);
+            } else if (athr === 1) {
+                SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:1", "Number", 25);
+                SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:2", "Number", 25);
             } else {
                 SimVar.SetSimVarValue("L:A32NX_STATE_INIT_ACTIVE", "Bool", 0);
             }
