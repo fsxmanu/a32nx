@@ -42,6 +42,6 @@ class A32NX_StateInitializer {
 
     setThrottlePositionToClimb() {
         SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:1", "Number", 25);
-        SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:1", "Number", 25);
+        SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:2", "Number", 25);
     }
 }
