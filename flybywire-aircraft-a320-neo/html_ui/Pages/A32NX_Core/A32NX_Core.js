@@ -63,6 +63,11 @@ class A32NX_Core {
                 module: new A32NX_Speeds(),
                 updateInterval: 500,
             },
+            {
+                name: 'StateInitializer',
+                module: new A32NX_StateInitializer(),
+                updateInterval: 100,
+            },
         ];
         this.moduleThrottlers = {};
         for (const moduleDefinition of this.modules) {
