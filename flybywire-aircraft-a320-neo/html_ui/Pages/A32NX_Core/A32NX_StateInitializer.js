@@ -8,6 +8,12 @@ class A32NX_StateInitializer {
             const selectedSpeed = SimVar.GetSimVarValue("L:A32NX_STATE_INIT_SELECTED_SPEED", "Number");
             const isApproach = SimVar.GetSimVarValue("L:A32NX_STATE_INIT_IS_APPROACH", "Bool");
 
+            if (autoThrustActive === 1) {
+                this.setThrottlePositionToClimb().then(() => {
+                    SimVar.SetSimVarValue("K:AUTO_THROTTLE_ARM", "Number", 1);
+                });
+            }
+
             if (autobrakeLevel === 1) {
                 SimVar.SetSimVarValue("L:A32NX_OVHD_AUTOBRK_LOW_ON_IS_PRESSED", "Number", 1);
             } else if (autobrakeLevel === 2) {
@@ -20,19 +26,22 @@ class A32NX_StateInitializer {
                 SimVar.SetSimVarValue("L:A32NX_FMGC_FLIGHT_PHASE", "Number", 5);
             }
 
-            if (autoThrustActive === 1) {
-                SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:1", "Number", 25);
-                SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:1", "Number", 25);
-                SimVar.SetSimVarValue("K:AUTO_THROTTLE_ARM", "Number", 1);
-            }
-
             if (isManaged) {
                 SimVar.SetSimVarValue("H:A320_Neo_FCU_SPEED_PUSH", "Number", 1);
             } else {
-                SimVar.SetSimVarValue("L:A320_Neo_FCU_SPEED_SET_DATA", "Number", selectedSpeed);
-                SimVar.SetSimVarValue("H:A320_Neo_FCU_SPEED_SET", "Number", 1);
-                SimVar.SetSimVarValue("H:A320_Neo_FCU_SPEED_PULL", "Number", 1);
+                SimVar.SetSimVarValue("L:A320_Neo_FCU_SPEED_SET_DATA", "Number", selectedSpeed).then(() => {
+                    SimVar.SetSimVarValue("H:A320_Neo_FCU_SPEED_SET", "Number", 1).then(() => {
+                        SimVar.SetSimVarValue("H:A320_Neo_FCU_SPEED_PULL", "Number", 1);
+                    });
+                });
             }
+
+            SimVar.SetSimVarValue("K:AUTO_THROTTLE_ARM", "Number", 1);
         }
+    }
+
+    setThrottlePositionToClimb() {
+        SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:1", "Number", 25);
+        SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:1", "Number", 25);
     }
 }

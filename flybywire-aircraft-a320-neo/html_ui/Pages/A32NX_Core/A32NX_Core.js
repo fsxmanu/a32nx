@@ -4,6 +4,11 @@ class A32NX_Core {
     constructor() {
         this.modules = [
             {
+                name: 'StateInitializer',
+                module: new A32NX_StateInitializer(),
+                updateInterval: 100,
+            },
+            {
                 name: 'ADIRS',
                 module: new A32NX_ADIRS(),
                 updateInterval: 100,
@@ -62,11 +67,6 @@ class A32NX_Core {
                 name: 'Speeds',
                 module: new A32NX_Speeds(),
                 updateInterval: 500,
-            },
-            {
-                name: 'StateInitializer',
-                module: new A32NX_StateInitializer(),
-                updateInterval: 100,
             },
         ];
         this.moduleThrottlers = {};
