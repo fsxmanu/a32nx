@@ -71,6 +71,7 @@ export const ArcMode: React.FC<ArcModeProps> = ({ symbols, adirsAlign, rangeSett
                             x={384}
                             y={620}
                             side={side}
+                            range={rangeSetting}
                             symbols={symbols}
                             mapParams={mapParams}
                             mapParamsVersion={mapParams.version}

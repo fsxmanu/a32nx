@@ -37,6 +37,7 @@ export const PlanMode: FC<PlanModeProps> = ({ side, symbols, adirsAlign, rangeSe
                     x={384}
                     y={384}
                     side={side}
+                    range={rangeSetting}
                     symbols={symbols}
                     mapParams={mapParams}
                     mapParamsVersion={mapParams.version}

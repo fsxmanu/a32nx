@@ -23,13 +23,14 @@ export type FlightPathProps = {
     x?: number,
     y?: number,
     side: EfisSide,
+    range: number,
     symbols: NdSymbol[],
     mapParams: MapParameters,
     mapParamsVersion: number,
     debug: boolean,
 }
 
-export const FlightPlan: FC<FlightPathProps> = memo(({ x = 0, y = 0, side, symbols, mapParams }) => {
+export const FlightPlan: FC<FlightPathProps> = memo(({ x = 0, y = 0, side, range, symbols, mapParams }) => {
     if (!mapParams.valid) {
         return null;
     }
@@ -96,6 +97,7 @@ export const FlightPlan: FC<FlightPathProps> = memo(({ x = 0, y = 0, side, symbo
                         arcSweep={symbol.arcSweepAngle}
                         arcRadius={radius}
                         mapParams={mapParams}
+                        ndRange={range}
                     />
                 );
             })}
@@ -229,9 +231,10 @@ interface SymbolMarkerProps {
     arcSweep?: Degrees,
     arcRadius?: number,
     mapParams: MapParameters,
+    ndRange: number,
 }
 
-const SymbolMarker: FC<SymbolMarkerProps> = memo(({ ident, x, y, endX, endY, arcRadius, arcSweep, type, constraints, length, direction, radials, radii, mapParams }) => {
+const SymbolMarker: FC<SymbolMarkerProps> = memo(({ ident, x, y, endX, endY, arcRadius, arcSweep, type, constraints, length, direction, radials, radii, mapParams, ndRange }) => {
     let colour = 'White';
     let shadow = true;
     // todo airport as well if in flightplan
@@ -308,7 +311,7 @@ const SymbolMarker: FC<SymbolMarkerProps> = memo(({ ident, x, y, endX, endY, arc
         elements.push(<NdbMarker colour={colour} />);
         showIdent = true;
     } else if (type & NdSymbolTypeFlags.Runway) {
-        if (mapParams.nmRadius > 80) {
+        if (ndRange > 80) {
             elements.push(<RunwayMarkerFar
                 ident={ident}
                 mapParams={mapParams}

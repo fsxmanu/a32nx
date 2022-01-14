@@ -75,6 +75,7 @@ export const RoseMode: FC<RoseModeProps> = ({ symbols, adirsAlign, rangeSetting,
                                 x={384}
                                 y={384}
                                 side={side}
+                                range={rangeSetting}
                                 symbols={symbols}
                                 mapParams={mapParams}
                                 mapParamsVersion={mapParams.version}
