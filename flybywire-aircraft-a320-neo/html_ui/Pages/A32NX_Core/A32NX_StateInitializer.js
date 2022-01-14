@@ -10,7 +10,8 @@ class A32NX_StateInitializer {
         this.autobrakeLevel = SimVar.GetSimVarValue("L:A32NX_STATE_INIT_AUTOBRK_LVL", "Number");
         this.isManaged = SimVar.GetSimVarValue("L:A32NX_STATE_INIT_USE_MANAGED_SPEED", "Bool");
         this.selectedSpeed = SimVar.GetSimVarValue("L:A32NX_STATE_INIT_SELECTED_SPEED", "Number");
-        this.selectedAlt = Math.max(2000, SimVar.GetSimVarValue("L:A32NX_STATE_INIT_SELECTED_ALT", "Number"));
+        // this.selectedAlt = Math.max(2000, SimVar.GetSimVarValue("L:A32NX_STATE_INIT_SELECTED_ALT", "Number"));
+        this.selectedAlt = 2000;
     }
 
     update() {
@@ -38,7 +39,7 @@ class A32NX_StateInitializer {
                 SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:1", "Number", 45);
                 SimVar.SetSimVarValue("L:A32NX_AUTOTHRUST_TLA:2", "Number", 45);
             } else if (athr === 1) {
-                this.setClimbThrust.then(() => {
+                this.setClimbThrust().then(() => {
                     if (this.isManaged) {
                         SimVar.SetSimVarValue("H:A320_Neo_FCU_SPEED_PUSH", "Number", 1);
                     } else {
