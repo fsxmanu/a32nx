@@ -603,6 +603,17 @@ export class ManagedFlightPlan {
         return this._segments[this._segments.length - 1];
     }
 
+    public isLastWaypointInSegment(fpIndex: number): boolean {
+        const segment = this.findSegmentByWaypointIndex(fpIndex);
+        if (fpIndex >= this.waypoints.length) {
+            return false;
+        }
+        if (fpIndex === (segment.offset + segment.waypoints.length - 1)) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Recalculates all waypoint bearings and distances in the flight plan.
      */

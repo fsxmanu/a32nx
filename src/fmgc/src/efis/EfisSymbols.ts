@@ -9,6 +9,7 @@ import { Geometry } from '@fmgc/guidance/Geometry';
 import { GuidanceController } from '@fmgc/guidance/GuidanceController';
 import { PathVector, PathVectorType } from '@fmgc/guidance/lnav/PathVector';
 import { Geo } from '@fmgc/utils/Geo';
+import { SegmentType } from '@fmgc/wtsdk';
 import { LegType, RunwaySurface, VorType } from '../types/fstypes/FSEnums';
 import { NearbyFacilities } from './NearbyFacilities';
 
@@ -297,9 +298,17 @@ export class EfisSymbols {
                     // we pick these up later
                         continue;
                     }
-                    // if range >= 160, don't include terminal waypoints
-                    if (range >= 160 && wp.icao.match(/^[A-Z][A-Z0-9 ]{2}[A-Z0-9]{4}/) !== null) {
-                        continue;
+                    // if range >= 160, don't include terminal waypoints, except at enroute boundary
+                    if (range >= 160) {
+                        const segment = activeFp.findSegmentByWaypointIndex(i);
+                        if (segment.type === SegmentType.Departure) {
+                            // keep the last waypoint from the SID as it is the enroute boundary
+                            if (!activeFp.isLastWaypointInSegment(i)) {
+                                continue;
+                            }
+                        } else if (segment.type !== SegmentType.Enroute) {
+                            continue;
+                        }
                     }
 
                     if (!withinEditArea(wp.infos.coordinates)) {
