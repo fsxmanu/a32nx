@@ -392,6 +392,8 @@ export class LnavDriver implements GuidanceComponent {
         const efisDistance = activeLeg instanceof VMLeg ? null : Avionics.Utils.computeGreatCircleDistance(this.ppos, termination);
         const efisEta = activeLeg instanceof VMLeg ? null : LnavDriver.legEta(this.ppos, gs, termination);
 
+        // FIXME should be NCD if no FM position
+
         SimVar.SetSimVarValue('L:A32NX_EFIS_L_TO_WPT_BEARING', 'Degrees', efisBearing);
         SimVar.SetSimVarValue('L:A32NX_EFIS_L_TO_WPT_DISTANCE', 'Number', efisDistance);
         SimVar.SetSimVarValue('L:A32NX_EFIS_L_TO_WPT_ETA', 'Seconds', efisEta);
