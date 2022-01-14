@@ -114,7 +114,7 @@ export class FixedRadiusTransition extends Transition {
             && defaultTurnDirection !== this.nextLeg.constrainedTurnDirection;
         const requiredTurnDistance = this.radius * Math.tan(Math.abs(this.sweepAngle / 2) * MathUtils.DEGREES_TO_RADIANS) + 0.1;
         const tooBig = this.previousLeg.distanceToTermFix < requiredTurnDistance;
-        const notLinedUp = Math.abs(prevLegTermDistanceToNextLeg) >= 0.1; // "reasonable" distance
+        const notLinedUp = Math.abs(prevLegTermDistanceToNextLeg) >= 0.25; // "reasonable" distance
 
         // in some circumstances we revert to a path capture transition where the fixed radius won't work well
         if (Math.abs(this.sweepAngle) <= 3 || Math.abs(this.sweepAngle) > 175 || this.previousLeg.overflyTermFix || forcedTurn || tooBig || notLinedUp) {
