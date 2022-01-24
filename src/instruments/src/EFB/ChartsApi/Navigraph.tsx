@@ -74,6 +74,8 @@ export default class NavigraphClient {
 
     private accessToken: string;
 
+    private tokenExpiryDate: Date;
+
     public auth: AuthType = {
         code: '',
         link: '',
@@ -148,6 +150,7 @@ export default class NavigraphClient {
                         NXDataStore.set('NAVIGRAPH_REFRESH_TOKEN', refreshToken);
                         this.userInfo();
 
+                        this.tokenExpiryDate.setSeconds(new Date().getSeconds() + this.tokenRefreshInterval);
                         this.accessToken = r.access_token;
                     });
                 } else {
@@ -275,6 +278,9 @@ export default class NavigraphClient {
     }
 
     public hasToken() {
+        if (new Date() >= this.tokenExpiryDate) {
+            this.getToken();
+        }
         return !!this.accessToken;
     }
 
@@ -283,8 +289,8 @@ export default class NavigraphClient {
             const userInfoResp = await fetch('https://identity.api.navigraph.com/connect/userinfo', { headers: { Authorization: `Bearer ${this.accessToken}` } }).catch(() => {
                 console.log('Unable to Fetch User Info. #NV103');
             });
-
-            if (userInfoResp.ok) {
+            
+            if (userInfoResp instanceof Response && userInfoResp.ok) {
                 const userInfoJson = await userInfoResp.json();
 
                 this.userName = userInfoJson.preferred_username;

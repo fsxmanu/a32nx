@@ -16,7 +16,7 @@ const ScreenLoading = () => (
             <div className="placeholder">
                 <img src={logo} className="fbw-logo" alt="logo" />
                 {' '}
-                flyPad
+                flyPad Test Manuel
             </div>
             <div className="loading-bar">
                 <div className="loaded" />
